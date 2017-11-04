@@ -4,7 +4,17 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  uname -a
+  luarocks install kong "${KONG_VERSION}" OPENSSL_INCDIR="${BOARD_PATH}/install/include" OPENSSL_LIBDIR="${BOARD_PATH}/install/lib"
+
+  rm -rf "$shome/vendor/kong-${KONG_VERSION}"
+  mkdir -p "$shome/vendor/kong-${KONG_VERSION}"
+  git clone git@github.com:Kong/kong "$shome/vendor/kong-${KONG_VERSION}"
+  pushd "$shome/vendor/kong-${KONG_VERSION}"
+  git reset --hard "$KONG_VERSION"
+  popd
+  
+  rm -rf "$shome/vendor/kong"
+  ln -nfs "kong-${KONG_VERSION}" "$shome/vendor/kong"
 }
 
 main "$@"
