@@ -4,6 +4,9 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
+  cd "$shome"
+  mkdir -p "$shome/bin"
+
   luarocks install kong "${KONG_VERSION}" OPENSSL_INCDIR="${BOARD_PATH}/install/include" OPENSSL_LIBDIR="${BOARD_PATH}/install/lib"
 
   rm -rf "$shome/vendor/kong-${KONG_VERSION}"
@@ -15,6 +18,11 @@ function main {
   
   rm -rf "$shome/vendor/kong"
   ln -nfs "kong-${KONG_VERSION}" "$shome/vendor/kong"
+
+  block compile yarn
+  ln -nfs ../node_modules/.bin/kong-dashboard "$shome/bin/"
+
 }
+
 
 main "$@"
