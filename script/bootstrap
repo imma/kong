@@ -18,10 +18,6 @@ function main {
   
   rm -rf "$shome/vendor/kong"
   ln -nfs "kong-${KONG_VERSION}" "$shome/vendor/kong"
-
-  block compile yarn
-  ln -nfs ../node_modules/.bin/kong-dashboard "$shome/bin/"
-
 }
 
 

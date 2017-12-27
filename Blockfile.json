@@ -1,5 +1,8 @@
 {
   "require": [
     "openresty"
-  ]
+  ],
+  "versions": {
+    "kong": "kong/kong"
+  }
 }
