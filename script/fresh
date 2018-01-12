@@ -4,6 +4,12 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
+  case "${DISTRIB_ID}" in
+    Amazon)
+      return 0
+      ;;
+  esac
+
   if [[ "$($shome/script/version | jq -r '.kong')" != "$KONG_VERSION" ]]; then
     return 1
   fi
